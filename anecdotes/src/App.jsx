@@ -18,12 +18,25 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   const [points, setPoints] = useState(votes);
+  const [topRated, setTopRated] = useState(0);
+
+  const voteHandler = () => {
+    setPoints({ ...points, [selected]: points[selected] + 1 });
+    console.log(points[selected]);
+    console.log(points[topRated]);
+    if (points[selected] + 1 > points[topRated]) {
+      setTopRated(selected);
+    }
+  };
 
   return <div>
-      <p>{anecdotes[selected]}</p>
-      <p>has {points[selected]} votes</p>
-      <button onClick={() => setPoints({ ...points, [selected]: points[selected] + 1 })}>Vote</button>
-      <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>Next Anecdote</button>
+        <h1>Anecdote of the day</h1>
+        <p>{anecdotes[selected]}</p>
+        <p>has {points[selected]} votes</p>
+        <button onClick={voteHandler}>Vote</button>
+        <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>Next Anecdote</button>
+        <h1>Anecdote with most votes</h1>
+        <p>{anecdotes[topRated]}</p>
     </div>;
 };
 
